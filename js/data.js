@@ -18,9 +18,16 @@ function fail() {
   document.querySelector('[data-el="load-error"]').hidden = false;
   document.querySelectorAll('[role="tablist"], [role="tabpanel"]').forEach((el) => el.remove());
 }
-// The browser's own notices, such as a ResizeObserver loop, carry no error, and aren't failures.
-window.addEventListener("error", (event) => { if (event.error) fail(); });
-window.addEventListener("unhandledrejection", () => fail());
+// Only errors from the page's own scripts and Highcharts count (3 November 2026: once published, the message showed in
+// Safari while the page drew in Chrome; scripts that browser extensions add to a page raise errors here too). The
+// browser's own notices, such as a ResizeObserver loop, carry no error, and aren't failures either. The page's own
+// promises are all awaited, so a rejection elsewhere isn't one of its failures.
+const SITE = new URL(".", document.baseURI).href;
+const ours = (file) => typeof file === "string" && (file.startsWith(SITE) || file.startsWith("https://cdn.jsdelivr.net/npm/highcharts@"));
+window.addEventListener("error", (event) => {
+  if (event.error && ours(event.filename)) fail();
+  else if (drawing) console.warn("Not the page's own error, so the charts still draw:", event.message, event.filename);
+});
 
 // What the tabs read; an older copy of the data without one fails here, with the page's message, rather than leaving a
 // tab blank or a caption ending "Data as of undefined." (the reviews of 3 November 2026). The model's own inputs are
