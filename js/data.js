@@ -4,6 +4,16 @@
 import { DEFAULTS, createModel } from "./model.js";
 import { highchartsDefaults } from "./ui.js";
 
+// Safari before 15.4 (March 2022) lacks Array.prototype.at, which the tab scripts use. Where it is missing this stands
+// in for it, so those Safaris draw the page rather than show the message (the user's decision, 3 November 2026, after
+// the page was checked in WebKit: evidence/webkit_check_2026-11-03/). This module runs before the tab scripts.
+if (!Array.prototype.at) {
+  Object.defineProperties(Array.prototype, { at: { value(n) {
+    const i = Math.trunc(n) || 0;
+    return this[i < 0 ? i + this.length : i];
+  }, writable: true, configurable: true } });
+}
+
 // Until the tabs have drawn, any failure, here or in their first drawing, leaves the message alone on the page (the
 // second review of 3 November 2026: the tabs, a download button and an empty "Assumptions" stayed, and failures after
 // the data had loaded showed nothing). A later error doesn't blank a page already drawn.
@@ -43,11 +53,17 @@ async function load() {
   // the accessibility module (the second review of 3 November 2026).
   if (!Highcharts.seriesTypes?.arearange) throw new Error("highcharts-more did not load");
   if (!Highcharts.getOptions().accessibility?.screenReaderSection) throw new Error("Highcharts' accessibility module did not load");
-  // Checked with the server each time, so a browser can't pair new scripts with an old copy (the review of 3 November
+  // The single-file copy (bundle_site.py, 3 November 2026) carries the inputs in the page; the site fetches them,
+  // checked with the server each time, so a browser can't pair new scripts with an old copy (the review of 3 November
   // 2026).
-  const res = await fetch("data/model_inputs.json", { cache: "no-cache" });
-  if (!res.ok) throw new Error(`data/model_inputs.json: HTTP ${res.status}`);
-  const inputs = await res.json();
+  const bundled = document.getElementById("model-inputs");
+  let inputs;
+  if (bundled) inputs = JSON.parse(bundled.textContent);
+  else {
+    const res = await fetch("data/model_inputs.json", { cache: "no-cache" });
+    if (!res.ok) throw new Error(`data/model_inputs.json: HTTP ${res.status}`);
+    inputs = await res.json();
+  }
   const missing = REQUIRED.filter((path) => path.split(".").reduce((o, key) => o?.[key], inputs) === undefined);
   if (missing.length) throw new Error(`data/model_inputs.json lacks ${missing.join(", ")}: rebuild it`);
   // Roboto before the charts draw, so their labels are measured and placed in it (the review of 3 November 2026: the
