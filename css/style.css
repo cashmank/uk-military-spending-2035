@@ -18,19 +18,19 @@ body { margin: 0; background: #ffffff; color: var(--ink); font-family: "Unica 77
 .dw { width: 800px; margin: 0 auto; padding: 16px; }
 
 .visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
-.tabs { display: flex; flex-wrap: wrap; border-bottom: 1px solid var(--rule); margin: 0 0 24px; }
+.tabs { display: flex; flex-wrap: wrap; border-bottom: 1px solid var(--rule); margin: 0 0 16px; }
 .tabs [role="tab"] { font: inherit; font-size: 14px; color: var(--note); background: none; border: 0;
   border-bottom: 3px solid transparent; padding: 8px 14px 7px; margin-bottom: -1px; cursor: pointer; }
 .tabs [role="tab"]:hover { color: var(--ink); }
 .tabs [role="tab"][aria-selected="true"] { color: var(--title); border-bottom-color: var(--blue); }
 .tabs [role="tab"]:focus-visible { outline: 2px solid var(--blue); outline-offset: -2px; }
-.options { border-bottom: 1px solid var(--grid); margin: 0 0 24px; padding-bottom: 16px; }
-.options-title { font-family: "Unica 77"; font-size: 24px; color: var(--ink); margin: 0 0 16px; }
-.chart-title { font-family: "Unica 77"; font-size: 24px; color: var(--title); line-height: 1.2; margin: 0 0 12px; }
-.description { font-family: "Source Serif"; font-size: 14px; line-height: 1.35; margin: 0 0 16px; }
+.options { border-bottom: 1px solid var(--grid); margin: 0 0 16px; padding-bottom: 16px; }
+.options-title { font-family: "Unica 77"; font-size: 20px; color: var(--ink); margin: 0 0 16px; }
+.chart-title { font-family: "Unica 77"; font-size: 20px; color: var(--title); line-height: 1.2; margin: 0 0 12px; }
+.description { font-family: "Source Serif"; font-size: 12px; line-height: 1.35; margin: 0 0 16px; }
 
 .controls { margin: 0 0 4px; }
-.group { display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 4px 12px; align-items: start; margin: 0 0 16px; }
+.group { display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 4px 12px; align-items: start; margin: 0 0 12px; }
 .group[hidden] { display: none; }
 .group-label { font-family: "Unica 77"; font-size: 14px; padding-top: 4px; }
 .group-note { grid-column: 2; font-size: 12px; color: var(--note); margin: 0; }
@@ -46,9 +46,9 @@ body { margin: 0; background: #ffffff; color: var(--ink); font-family: "Unica 77
 .tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(128px, 1fr)); gap: 8px; margin: 16px 0 16px; }
 .tile { background: var(--tile); border-radius: 4px; padding: 12px; display: flex; flex-direction: column; gap: 8px; }
 .tile p { margin: 0; }
-.tile .label { font-size: 12px; color: var(--note); }
-.tile .value { font-size: 24px; font-family: "Unica 77"; line-height: 1; color: var(--title); }
-.tile .sub { font-size: 12px; color: var(--note); }
+.tile .label { font-size: 10px; color: var(--note); }
+.tile .value { font-size: 20px; font-family: "Unica 77"; line-height: 1; color: var(--title); }
+.tile .sub { font-size: 10px; color: var(--note); }
 
 .chart { height: 400px; margin: 16px 0 16px; }
 /* Shown only if the data or Highcharts fail to load (js/data.js). */
