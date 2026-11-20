@@ -3,55 +3,71 @@
 @font-face { font-family: "Roboto"; src: url("../fonts/Roboto-Regular.ttf") format("truetype"); font-weight: 400; font-style: normal; font-display: swap; }
 @font-face { font-family: "Roboto"; src: url("../fonts/Roboto-Italic.ttf") format("truetype"); font-weight: 400; font-style: italic; font-display: swap; }
 @font-face { font-family: "Roboto"; src: url("../fonts/Roboto-Bold.ttf") format("truetype"); font-weight: 700; font-style: normal; font-display: swap; }
+@font-face { font-family: "Unica 77"; src: url("../fonts/Unica77LL-Bold.otf") format("opentype"); font-weight: 700; font-style: normal; font-display: swap; }
+@font-face { font-family: "Unica 77 Mono"; src: url("../fonts/Unica77MonoLL-Regular.otf") format("opentype"); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: "Source Serif"; src: url("../fonts/SourceSerif4-VariableFont_opsz\,wght.ttf") format("opentype"); font-weight: 400; font-style: normal; font-display: swap; }
 
 :root {
   --blue: #388dff; --blue-ink: #0b57c2; --blue-wash: #eaf3ff; --ink: #181818; --title: #000000;
-  --grid: #e7e7e7; --rule: #d9d9d9; --tile: #f5f5f5; --note: #656565; --footer: #888888;
+  --grid: #d9d9d9; --rule: #d9d9d9; --tile: #f5f5f5; --note: #666666; --footer: #666666;
 }
 * { box-sizing: border-box; }
 html { background: #ffffff; }
-body { margin: 0; background: #ffffff; color: var(--ink); font-family: Roboto, Arial, sans-serif; font-size: 14px; line-height: 1.35; }
-/* A fixed width, the same on phones, which zoom and pan (decision of 2 November 2026). */
-.dw { width: 760px; margin: 0 auto; padding: 16px; }
+body { margin: 0; background: #ffffff; color: var(--ink); font-family: "Unica 77 Mono", monospace, sans-serif; font-size: 14px; line-height: 1.35; }
+/* A fixed width, the same on phones, which zoom and pan (decision of 2 November 2026). See media query at bottom of file for very minor mobile styling to prevent overflow.*/
+.dw { width: 800px; margin: 0 auto; padding: 16px; }
 
 .visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
-.tabs { display: flex; flex-wrap: wrap; border-bottom: 1px solid var(--rule); margin: 0 0 16px; }
-.tabs [role="tab"] { font: inherit; font-size: 14px; font-weight: 700; color: var(--note); background: none; border: 0;
+.tabs { display: flex; flex-wrap: wrap; border-bottom: 1px solid var(--rule); margin: 0 0 24px; }
+.tabs [role="tab"] { font: inherit; font-size: 14px; color: var(--note); background: none; border: 0;
   border-bottom: 3px solid transparent; padding: 8px 14px 7px; margin-bottom: -1px; cursor: pointer; }
 .tabs [role="tab"]:hover { color: var(--ink); }
 .tabs [role="tab"][aria-selected="true"] { color: var(--title); border-bottom-color: var(--blue); }
 .tabs [role="tab"]:focus-visible { outline: 2px solid var(--blue); outline-offset: -2px; }
-.options { border-bottom: 1px solid var(--grid); margin: 0 0 16px; padding-bottom: 4px; }
-.options-title { font-size: 13px; font-weight: 700; color: var(--ink); margin: 0 0 10px; }
-.chart-title { font-size: 16px; font-weight: 700; color: var(--title); line-height: 22px; margin: 0 0 8px; }
-.description { font-size: 14px; line-height: 17px; margin: 0 0 4px; }
+.options { border-bottom: 1px solid var(--grid); margin: 0 0 24px; padding-bottom: 16px; }
+.options-title { font-family: "Unica 77"; font-size: 24px; color: var(--ink); margin: 0 0 16px; }
+.chart-title { font-family: "Unica 77"; font-size: 24px; color: var(--title); line-height: 1.2; margin: 0 0 12px; }
+.description { font-family: "Source Serif"; font-size: 14px; line-height: 1.35; margin: 0 0 16px; }
 
 .controls { margin: 0 0 4px; }
-.group { display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 4px 12px; align-items: start; margin: 0 0 8px; }
+.group { display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 4px 12px; align-items: start; margin: 0 0 16px; }
 .group[hidden] { display: none; }
-.group-label { font-size: 12px; font-weight: 700; padding-top: 5px; }
+.group-label { font-family: "Unica 77"; font-size: 14px; padding-top: 4px; }
 .group-note { grid-column: 2; font-size: 12px; color: var(--note); margin: 0; }
 .group-note:empty { display: none; }
-.seg { display: flex; flex-wrap: wrap; gap: 4px; }
+.seg { display: flex; position: relative; flex-wrap: wrap; gap: 4px; }
 .seg input { position: absolute; opacity: 0; width: 1px; height: 1px; }
-.seg label { font-size: 12px; padding: 5px 10px; border: 1px solid var(--rule); border-radius: 4px; cursor: pointer; background: #ffffff; color: var(--ink); }
+.seg label { font-size: 12px; padding: 5px 10px; border: 1px solid var(--tile); border-radius: 4px; cursor: pointer; background: var(--tile); color: var(--ink); }
 .seg label:hover { border-color: var(--blue); }
 .seg input:checked + label { background: var(--blue-wash); border-color: var(--blue); color: var(--blue-ink); font-weight: 700; }
 .seg input:focus-visible + label { outline: 2px solid var(--blue); outline-offset: 2px; }
 
-.tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(128px, 1fr)); gap: 8px; margin: 12px 0 8px; }
-.tile { background: var(--tile); border-radius: 4px; padding: 10px 12px; }
+
+.tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(128px, 1fr)); gap: 8px; margin: 16px 0 16px; }
+.tile { background: var(--tile); border-radius: 4px; padding: 12px; display: flex; flex-direction: column; gap: 8px; }
 .tile p { margin: 0; }
 .tile .label { font-size: 12px; color: var(--note); }
-.tile .value { font-size: 22px; font-weight: 700; line-height: 28px; color: var(--title); }
+.tile .value { font-size: 24px; font-family: "Unica 77"; line-height: 1; color: var(--title); }
 .tile .sub { font-size: 12px; color: var(--note); }
 
-.chart { height: 400px; margin: 4px 0 0; }
+.chart { height: 400px; margin: 16px 0 16px; }
 /* Shown only if the data or Highcharts fail to load (js/data.js). */
 .load-error { font-size: 14px; color: var(--ink); background: var(--tile); border-left: 3px solid var(--blue); padding: 8px 12px; margin: 0 0 16px; }
 
-.notes { font-size: 12px; font-style: italic; color: var(--note); line-height: 16px; margin: 0 0 6px; }
+.notes { font-family: "Source Serif"; font-size: 12px; font-style: italic; color: var(--note); line-height: 1.35; margin: 0 0 12px; }
 .footer { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 6px 12px; font-size: 11px; color: var(--footer); }
 .footer button { font: inherit; font-size: 11px; color: var(--blue-ink); background: none; border: 0; padding: 0; cursor: pointer; text-decoration: underline; }
 
 
+/* Mobile */
+@media (max-width: 767px) {
+  .dw { width: 100%; }
+  .tiles { grid-template-columns: 1fr; gap: 12px; }
+  .options-title, .chart-title { font-size: 16px; }  
+  .group { display: block; }
+  .group-label { font-size: 12px; }
+  .group-note { font-size: 10px;}
+  .description { font-size: 12px; }
+  .tile .value { font-size: 20px }
+  .tabs [role="tab"] {font-size: 12px;}
+}
